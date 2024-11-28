@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 
-
 namespace Day1
 {
     internal class Day1Processor
@@ -18,9 +17,10 @@ namespace Day1
             {
                 FindFirstDigit(line);
                 FindLastDigit(line);
-                AddBothNumbers(FirstNumber, LastNumber);
+                CombineBothNumbers(FirstNumber, LastNumber);
             }
-            Console.WriteLine("Total count of ints" + ListOfInts.Sum());
+            Console.WriteLine("Total count of ints: " + ListOfInts.Sum());
+            return;
             //ReadTextFromArray();
         }
 
@@ -35,6 +35,7 @@ namespace Day1
             }
             string[] textFromFile = File.ReadAllLines(filePath);
             InputText = textFromFile;
+            return;
         }
 
         void ReadTextFromArray()
@@ -47,55 +48,66 @@ namespace Day1
                 }
             }
             return;
+        }
 
+        void ConvertWordsToInt(string inputText)
+        {
+            List<string> list = new List<string>();
+            list.Add("zero");
+            list.Add("one");
+            list.Add("two");
+            list.Add("three");
+            list.Add("four");
+            list.Add("five");
+            list.Add("six");
+            list.Add("seven");
+            list.Add("eight");
+            list.Add("nine");
+            list.Add("ten");
+
+            //string retVal = inputText.Replace(inputText,)
         }
 
 
-        public void FindFirstDigit(string inputText)
+        void FindFirstDigit(string inputText)
         {
-            if (InputText != null)
-            {
-                string retVal = string.Join(string.Empty, Regex.Matches(inputText, @"\d+").OfType<Match>().Select(m => m.Value));
-                //string retVal = Regex.Match(inputText, @"\d+").Value;
-                Console.WriteLine(retVal);
-                char firstWord = retVal[0];
-                FirstNumber = firstWord.ToString();
-              
-                //Console.WriteLine("First number: " + FirstNumber);
-            }
+           
+                //Find all ints
+            string retVal = string.Join(string.Empty, Regex.Matches(inputText, @"\d+").OfType<Match>().Select(m => m.Value));
+            FirstNumber = retVal[0].ToString();
+            //char firstWord = retVal[0];
+                //FirstNumber = firstWord.ToString();
             return;
         }
 
 
-        public void FindLastDigit(string inputText)
+        void FindLastDigit(string inputText)
         {
 
             string retVal = string.Join(string.Empty, Regex.Matches(inputText, @"\d+").OfType<Match>().Select(m => m.Value));
 
            //string retVal = Regex.Match(inputText, @"\d+").Value;
             Console.WriteLine(retVal);
-            
-            char lastWord = retVal.Last();
-            LastNumber = lastWord.ToString();
 
+            LastNumber = retVal.Last().ToString();
+            return;
             //Console.WriteLine("Last number: " + LastNumber);
         }
 
-        public void AddBothNumbers (string firstNumber, string lastNumber)
+        void CombineBothNumbers (string firstNumber, string lastNumber)
         {
             string bothNumbers = firstNumber + lastNumber;
             try
             {
                 int retVal = Int32.Parse(bothNumbers.ToString());
                 ListOfInts.Add(retVal);
-                                 
                 //Console.WriteLine(retVal);
             }
             catch (FormatException)
             {
                 Console.WriteLine($"Unable to parse '{bothNumbers}'");
             }
-            
+            return;
         }
     }
 }
